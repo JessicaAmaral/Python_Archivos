@@ -37,7 +37,7 @@ def registrar_ventas(cant):
     inventario=leer_archivo('inventario')  
     id_vendedor=input('Ingrese el ID del vendedor ------> \n')
     if id_vendedor in ['1V','2V','3V']:
-        ventas=leer_archivo('{id_vendedor}_ventas') 
+        ventas=leer_archivo(f'{id_vendedor}_ventas') 
         for i in range(cant):
             id_producto=input(f'Ingrese el ID del producto {i+1} --->')
             cant_prod=input(f'Ingrese la cantidad vendida del producto {i+1} --->')
@@ -51,7 +51,8 @@ def registrar_ventas(cant):
                     print('¡Su registro de ventas ha sido exitoso!')
                     break
                 else:
-                    print('El id del producto no existe.')                   
+                    print('El id del producto no existe.')   
+        reporte_ventas(ventas, f'{id_vendedor}')                            
     else:
         print('El id de vendedor es incorrecto.')
    
@@ -154,7 +155,7 @@ def reportes_ventas_vendedor():
             if nombre in empleados[j][0] or nombre in empleados[j][1]:
                 archivo = str(empleados[j][0])
                 datos = leer_archivo(f'{archivo}_ventas')
-                reporte = reporte_ventas(datos,f'{archivo}')        
+                reporte = leer_archivo(f'{archivo}_reporte')       
                 print('             Artículo                Cantidad              Total\n')
                 imprimir_matriz(reporte)
         if len(datos) < 15:
@@ -175,6 +176,10 @@ def reporte_ventas(archivo, nombre):
 
 def reporte_articulos(archivo, nombre):
     matriz = []
+    vendedor1 = leer_archivo('1V_reporte')
+    vendedor2 = leer_archivo('2V_reporte')
+    vendedor3 = leer_archivo('3V_reporte')
+
     for k in range(len(archivo)):
         matriz.append([])            
         matriz[k].append(archivo[k][1])
