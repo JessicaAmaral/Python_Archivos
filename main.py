@@ -1,8 +1,6 @@
 #Programa de inventarios
-
-#Funciones
-
 import os
+#Funciones
 
 def limpia():
     if os.name == "nt":
