@@ -1,8 +1,6 @@
 #Programa de inventarios
-
-#Funciones
-
 import os
+#Funciones
 
 def limpia():
     if os.name == "nt":
@@ -153,20 +151,25 @@ def reportes_ventas_vendedor():
     while cant <= 0:
         print('Error: Número no válido. Por favor vuelva a ingresar')
         cant = int(input())
-    
+    # Ciclo para pedir los datos que ingresó el usuario 
     for i in range (0,cant):   
-        datos = []   
+        reporte = []   
         nombre = input('Ingrese el nombre o ID del vendedor que desea ver: ')
         print('\n')
+        #Se lee el archivo lista de vendedores para poder comparar sus nombres o ID
         empleados = leer_archivo('lista_vendedores')
+        #Ciclo hata la longitud de empleados para hacer comparaciones
         for j in range(0,len(empleados)):     
+            #Si el dato ingresado se encuentra en la lista actual columna 0, se encontró por ID. En la columna 1 encontró por nombre
             if nombre in empleados[j][0] or nombre in empleados[j][1]:
+                #En cualquier caso, a archivo se le asignará el ID de la lista que tuvo coincidencia (debido al nombre de los archivos)
                 archivo = str(empleados[j][0])
-                datos = leer_archivo(f'{archivo}_ventas')
+                #Se lee e imprime el archivo de reporte correspondiente a ese ID
                 reporte = leer_archivo(f'{archivo}_reporte')       
                 print('             Artículo                Cantidad              Total\n')
                 imprimir_matriz(reporte)
-        if len(datos) < 15:
+        #En caso de que no se haya encontrado el vendedor, la lista datos se habrá quedado vacía. Por eso se hizo una condicional para comprobar si esa lista es igual a cero
+        if len(datos) <= 0:
             print('Error: No se encontró al vendedor\n')                
     input('Enter para continuar')
     
