@@ -28,6 +28,10 @@ def leer_archivo(nombre):
 def imprimir_lista(lista):
     for elemento in lista:
         print(elemento, end="       ")   
+
+def imprimir_lista2(lista):
+    for elemento in lista:
+        print(f'{elemento:>10}', end="       ")  
         
 def imprimir_matriz(matriz):
     for lista in matriz:
@@ -54,7 +58,8 @@ def registrar_ventas(cant):
                     break
                 else:
                     print('El id del producto no existe.')   
-        reporte_ventas(ventas, f'{id_vendedor}')                            
+        reporte_ventas(ventas, f'{id_vendedor}')  
+        reporte_articulos()                          
     else:
         print('El id de vendedor es incorrecto.')
    
@@ -177,24 +182,47 @@ def reporte_ventas(archivo, nombre):
     reporte = leer_archivo(f'{nombre}_reporte')
     return reporte
 
-def reporte_articulos(archivo, nombre):
+def reporte_articulos():
     matriz = []
     vendedor1 = leer_archivo('1V_reporte')
     vendedor2 = leer_archivo('2V_reporte')
     vendedor3 = leer_archivo('3V_reporte')
-
-    for k in range(len(archivo)):
+    inventario = leer_archivo('inventario')
+    for k in range(len(inventario)):
         matriz.append([])            
-        matriz[k].append(archivo[k][1])
-        matriz[k].append(archivo[k][3])
-        total = int(archivo[k][3])*int(archivo[k][4])
-        matriz[k].append(str(total))
-    guarda_matriz(matriz,f'{nombre}_reporte')
-    reporte = leer_archivo(f'{nombre}_reporte')
+        matriz[k].append(inventario[k][1])
+        total_art = int(vendedor1[k][1]) + int(vendedor2[k][1]) + int(vendedor3[k][1])
+        matriz[k].append(str(total_art))
+        matriz[k].append(inventario[k][4])
+        total_vent = total_art * int(inventario[k][4])
+        matriz[k].append(str(total_vent))
+    guarda_matriz(matriz,'articulo_reporte')
+    reporte = leer_archivo('articulo_reporte')
     return reporte
     
-#def reportes_ventas_artículo():        
+def reportes_ventas_artículo():        
+    cant = int(input('Ingrese la cantidad de búsquedas que desea hacer: '))
+    while cant <= 0:
+        print('Error: Número no válido. Por favor vuelva a ingresar')
+        cant = int(input())
     
+    for i in range (0,cant):   
+        reporte = []   
+        nombre = input('Ingrese el nombre o ID del artículo que desea ver: ')
+        print('\n')
+        archivo = leer_archivo('inventario')
+        for j in range(0,len(archivo)):     
+            if nombre in archivo[j][0] or nombre in archivo[j][1]:
+                reporte = leer_archivo('articulo_reporte')       
+                print('   Artículo            Cantidad        Precio           Total\n')
+                lista = (reporte[j])
+                imprimir_lista2(lista)
+                print('\n')
+                break
+        if len(reporte) < 1:
+            print('Error: No se encontró el artículo\n')                
+    input('Enter para continuar')
+
 #def consultar_datos_ventas():
     
 #Programa principal
@@ -203,7 +231,7 @@ print('AUTOX')
 print("***********************************************************************")
 opc = 0
 
-while opc != "6":
+while opc != "7":
     limpia()
     print("_______________________________________________________________________")
     print("""
