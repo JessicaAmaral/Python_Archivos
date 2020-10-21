@@ -1,4 +1,4 @@
-1,Llantas,Toyo r88r 255/45/18,7,3000
+1,Llantas,Toyo r88r 255/45/18,8,3000
 2,Rines,Enkei Rpf1 r18,8,5000
 3,Motor Toyota,2JZ,2,100000
 4,Motor Nissan,RB26,3,100000
@@ -6,10 +6,10 @@
 6,Filtro de gasolina,Nissan 1,0,300
 7,Filtro de aceite,Bosh 1,0,100
 8,Nitro,NOS 1L,0,2000
-9,Turbo Kit,sheppperace 1,0,25000
+9,Turbo Kit,sheppperace 1,55,25000
 10,Estereo,Pionner 1,0,3000
 11,Intake,K&N R8,0,5000
 12,Suspensión,Coilovers green,0,2500
 13,Faros,Frontier LED,0,5000
-14,Cinturones,Sparco red,0,2500
-15,Transmisión,Clutch Xtreme,0,5000
+14,Cinturones,Sparco red,10,2500
+15,Transmisión,Clutch Xtreme,5,5000

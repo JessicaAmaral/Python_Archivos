@@ -1,4 +1,4 @@
-Llantas,7,21000
+Llantas,8,24000
 Rines,8,40000
 Motor Toyota,2,200000
 Motor Nissan,3,300000
@@ -6,10 +6,10 @@ Asientos ,0,0
 Filtro de gasolina,0,0
 Filtro de aceite,0,0
 Nitro,0,0
-Turbo Kit,0,0
+Turbo Kit,55,1375000
 Estereo,0,0
 Intake,0,0
 Suspensión,0,0
 Faros,0,0
-Cinturones,0,0
-Transmisión,0,0
+Cinturones,10,25000
+Transmisión,5,25000
