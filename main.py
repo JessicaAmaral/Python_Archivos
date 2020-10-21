@@ -169,6 +169,73 @@ def reportes_ventas_vendedor():
         if len(datos) < 15:
             print('Error: No se encontró al vendedor\n')                
     input('Enter para continuar')
+    
+def reportes_ventas_artículo():        
+    cant = int(input('Ingrese la cantidad de búsquedas que desea hacer: '))
+    while cant <= 0:
+        print('Error: Número no válido. Por favor vuelva a ingresar')
+        cant = int(input())
+    
+    for i in range (0,cant):   
+        reporte = []   
+        nombre = input('Ingrese el nombre o ID del artículo que desea ver: ')
+        print('\n')
+        archivo = leer_archivo('inventario')
+        for j in range(0,len(archivo)):     
+            if nombre in archivo[j][0] or nombre in archivo[j][1]:
+                reporte = leer_archivo('articulo_reporte')       
+                print('   Artículo            Cantidad        Precio           Total\n')
+                lista = (reporte[j])
+                imprimir_lista2(lista)
+                print('\n')
+                break
+        if len(reporte) < 1:
+            print('Error: No se encontró el artículo\n')                
+    input('Enter para continuar')
+
+
+def consultar_datos_ventas():
+    cant = int(input('Ingrese la cantidad de búsquedas que desea hacer: '))
+    while cant <= 0:
+        print('Error: Número no válido. Por favor vuelva a ingresar')
+        cant = int(input())
+    
+    for i in range (0,cant):   
+        reporte = []
+        busqueda = []   
+        total_art = 0
+        total_vent = 0
+        nombre = input('Ingrese el nombre o ID del vendedor o nombre de artículo que desea consultar: ')
+        print('\n')
+        inventario = leer_archivo('inventario')
+        empleados = leer_archivo('lista_vendedores')
+        for j in range(0,len(inventario)):     
+            if nombre in empleados[j][0] or nombre in empleados[j][1]:
+                archivo = str(empleados[j][0])
+                reporte = leer_archivo(f'{archivo}_reporte')  
+                for lista in range (len(reporte)):
+                    total_art += int(reporte[lista][1])
+                    total_vent +=  int(reporte[lista][2])
+                busqueda.append(str(total_art))    
+                busqueda.append(str(total_vent))
+                print('   Art Vendidos      Total\n')
+                imprimir_lista2(busqueda)
+                print('\n')
+                break
+            elif  nombre in inventario[j][1]:
+                reporte = leer_archivo('articulo_reporte')     
+                total_art = int(reporte[j][1])
+                total_vent =  int(reporte[j][3])                  
+                busqueda.append(str(total_art))    
+                busqueda.append(str(total_vent))                
+                print('   Art Vendidos        Total\n')
+                imprimir_lista2(busqueda)
+                print('\n')
+                break
+        if len(reporte) < 1:
+            print('Error: No se encontró el artículo\n')                
+    input('Enter para continuar')
+
 
 def reporte_ventas(archivo, nombre):
     matriz = []
@@ -199,31 +266,8 @@ def reporte_articulos():
     guarda_matriz(matriz,'articulo_reporte')
     reporte = leer_archivo('articulo_reporte')
     return reporte
-    
-def reportes_ventas_artículo():        
-    cant = int(input('Ingrese la cantidad de búsquedas que desea hacer: '))
-    while cant <= 0:
-        print('Error: Número no válido. Por favor vuelva a ingresar')
-        cant = int(input())
-    
-    for i in range (0,cant):   
-        reporte = []   
-        nombre = input('Ingrese el nombre o ID del artículo que desea ver: ')
-        print('\n')
-        archivo = leer_archivo('inventario')
-        for j in range(0,len(archivo)):     
-            if nombre in archivo[j][0] or nombre in archivo[j][1]:
-                reporte = leer_archivo('articulo_reporte')       
-                print('   Artículo            Cantidad        Precio           Total\n')
-                lista = (reporte[j])
-                imprimir_lista2(lista)
-                print('\n')
-                break
-        if len(reporte) < 1:
-            print('Error: No se encontró el artículo\n')                
-    input('Enter para continuar')
 
-#def consultar_datos_ventas():
+
     
 #Programa principal
 print("***********************************************************************")
