@@ -169,7 +169,7 @@ def reportes_ventas_vendedor():
                 print('             Artículo                Cantidad              Total\n')
                 imprimir_matriz(reporte)
         #En caso de que no se haya encontrado el vendedor, la lista datos se habrá quedado vacía. Por eso se hizo una condicional para comprobar si esa lista es igual a cero
-        if len(datos) <= 0:
+        if len(reporte) <= 0:
             print('Error: No se encontró al vendedor\n')                
     input('Enter para continuar')
     
