@@ -148,10 +148,9 @@ def reportes_ventas_vendedor():
     while cant <= 0:
         print('Error: Número no válido. Por favor vuelva a ingresar')
         cant = int(input())
-    datos = []
-    matriz = []
-    cont = 0
-    for i in range (0,cant):      
+    
+    for i in range (0,cant):   
+        datos = []   
         nombre = input('Ingrese el nombre o ID del vendedor que desea ver: ')
         print('\n')
         empleados = leer_archivo('lista_vendedores')
