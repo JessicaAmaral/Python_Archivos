@@ -209,7 +209,7 @@ def consultar_datos_ventas():
         print('\n')
         inventario = leer_archivo('inventario')
         empleados = leer_archivo('lista_vendedores')
-        for j in range(0,len(inventario)):     
+        for j in range(0,len(empleados)):     
             if nombre in empleados[j][0] or nombre in empleados[j][1]:
                 archivo = str(empleados[j][0])
                 reporte = leer_archivo(f'{archivo}_reporte')  
@@ -222,7 +222,8 @@ def consultar_datos_ventas():
                 imprimir_lista2(busqueda)
                 print('\n')
                 break
-            elif  nombre in inventario[j][1]:
+        for j in range(0,len(inventario)):   
+            if  nombre in inventario[j][1]:
                 reporte = leer_archivo('articulo_reporte')     
                 total_art = int(reporte[j][1])
                 total_vent =  int(reporte[j][3])                  
