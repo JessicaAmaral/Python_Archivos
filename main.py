@@ -72,30 +72,18 @@ def registrar_ventas(cant):
     
 def registrar_llegada_articulos_almacen():
     inventario=leer_archivo('inventario')
-    almacen=[]
-    print(inventario)
-    id_vendedor=input('Ingrese el ID del que recibio------> \n')
+    id_vendedor=input('Ingrese el ID del vendedor que recibio------> \n')
     if id_vendedor in ['1R','2R','3R']:
-        with open(f'almacen','r', encoding='utf-8') as archivo:
-            for linea in archivo:
-                sin_enter=linea.rstrip()
-                lista=sin_enter.split(',')
-                almacen.append(lista)
-         
-            opci=input('1-Si desea agregar un articulo nuevo ingrese---->N.\n2-Si desea registrar al almacen de un producto existente ingrese---->E\n----> ')
+            opci=input('1-Si desea agregar un articulo nuevo ingrese---->N.\n2-Si desea registrar al inventario de un producto existente ingrese---->E\n----> ')
             if opci == 'E' or opci=='e':
                 cant_alm=int(input('Cantidad de productos:'))        
                 if cant_alm>0:
                     for i in range(cant_alm):
                         id_producto=input(f'Ingrese el ID del producto {i+1}--->')          
-                        cant_prod=input(f'Ingrese el la cantidad que llego del producto {i+1}-->')
-                        for z in range(len(almacen)):
-                            if id_producto in almacen[z][0]:
-                                suma=int(almacen[i][3])+int(cant_prod)
-                                almacen[z][3]=str(suma)
-                     
-                                inventario[i][3]=str((int(inventario[i][3])+int(cant_prod)))
-                                guarda_matriz(almacen,'almacen')
+                        cant_prod=input(f'inventario el la cantidad que llego del producto {i+1}-->')
+                        for z in range(len(inventario)):
+                            if id_producto in inventario[z][0]:
+                                inventario[z][3]=str((int(inventario[z][3])+int(cant_prod)))
                                 guarda_matriz(inventario,'inventario') 
                                 print('¡Su registro en el almacen ha sido exitoso!')
                             else:
@@ -107,7 +95,18 @@ def registrar_llegada_articulos_almacen():
                 cant_art=int(input('Cantidad de articulos que desea ingresar: \n'))
                 if cant_art>0:               
                     for i in range(cant_art):
-                        id_n=input('Ingrese el ID del articulo nuevo:\n')
+                        
+                        entra = 1
+                        while entra != 0:
+                            id_n=input('Ingrese el ID del articulo nuevo:\n')     
+                            for j in range (len(inventario)):
+                                if id_n == inventario[j][0]:
+                                    print('Error: Este ID ya existe')
+                                    entra = 1
+                                    break
+                                else:
+                                    entra = 0
+
                         nuevo_art.append(id_n)
                         nombre=input('Ingrese el NOMBRE del articulo nuevo: \n')
                         nuevo_art.append(nombre)
@@ -117,13 +116,9 @@ def registrar_llegada_articulos_almacen():
                         nuevo_art.append(cant)
                         precio_u=input('Ingrese el PRECIO UNITARIO del articulo nuevo: \n')
                     nuevo_art.append(precio_u)     
-                    almacen.append(nuevo_art)
                     inventario.append(nuevo_art)
-                    #print(almacen)
-                    #print(inventario)
-                    guarda_matriz(almacen,'almacen')
                     guarda_matriz(inventario,'inventario') 
-                    print('¡Su registro en el almacen ha sido exitoso!')                       
+                    print('¡Su registro en el inventario ha sido exitoso!')                       
                 else:
                     print('Error:La cantidad debe ser mayor a cero')
                          
