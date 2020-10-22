@@ -40,6 +40,7 @@ def imprimir_matriz(matriz):
 def registrar_ventas(cant):
     inventario=leer_archivo('inventario')  
     id_vendedor=input('Ingrese el ID del vendedor ------> \n')
+    suma = 0
     if id_vendedor in ['1V','2V','3V']:
         ventas=leer_archivo(f'{id_vendedor}_ventas') 
         for i in range(cant):
@@ -54,8 +55,8 @@ def registrar_ventas(cant):
                     guarda_matriz(inventario,'inventario') 
                     print('¡Su registro de ventas ha sido exitoso!')
                     break
-                else:
-                    print('El id del producto no existe.')   
+            if suma == 0:
+                print('El id del producto no existe.')   
         reporte_ventas(ventas, f'{id_vendedor}')  
         reporte_articulos()                          
     else:
