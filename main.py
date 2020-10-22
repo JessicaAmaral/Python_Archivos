@@ -69,12 +69,11 @@ def registrar_ventas(cant):
         print('El id de vendedor es incorrecto.')
    
 
-    
 def registrar_llegada_articulos_almacen():
     inventario=leer_archivo('inventario')
     id_vendedor=input('Ingrese el ID del vendedor que recibio------> \n')
     if id_vendedor in ['1R','2R','3R']:
-            opci=input('1-Si desea agregar un articulo nuevo ingrese---->N.\n2-Si desea registrar al inventario de un producto existente ingrese---->E\n----> ')
+            opci=input('1-Si desea agregar un articulo nuevo ingrese---->N\n2-Si desea registrar al inventario de un producto existente ingrese---->E\n----> ')
             if opci == 'E' or opci=='e':
                 cant_alm=int(input('Cantidad de productos:'))        
                 if cant_alm>0:
@@ -82,7 +81,7 @@ def registrar_llegada_articulos_almacen():
                         id_producto=input(f'Ingrese el ID del producto {i+1}--->')          
                         cant_prod=input(f'inventario el la cantidad que llego del producto {i+1}-->')
                         for z in range(len(inventario)):
-                            if id_producto in inventario[z][0]:
+                            if id_producto == inventario[z][0]:
                                 inventario[z][3]=str((int(inventario[z][3])+int(cant_prod)))
                                 guarda_matriz(inventario,'inventario') 
                                 print('¡Su registro en el inventario ha sido exitoso!')
@@ -96,18 +95,7 @@ def registrar_llegada_articulos_almacen():
                 cant_art=int(input('Cantidad de articulos que desea ingresar: \n'))
                 if cant_art>0:               
                     for i in range(cant_art):
-
-                        entra = 1
-                        while entra != 0:
-                            id_n=input('Ingrese el ID del articulo nuevo:\n')     
-                            for j in range (len(inventario)):
-                                if id_n == inventario[j][0]:
-                                    print('Error: Este ID ya existe')
-                                    entra = 1
-                                    break
-                                else:
-                                    entra = 0
-
+                        id_n = str(len(inventario)+1)
                         nuevo_art.append(id_n)
                         art_vendedor.append(id_n)
                         nombre=input('Ingrese el NOMBRE del articulo nuevo: \n')
@@ -135,6 +123,9 @@ def registrar_llegada_articulos_almacen():
         print('El id de recepcion es incorrecto.')
     
 def actualiza_vendedores (lista):
+    reporte = []
+    reporte_articulo = []
+
     venta1 = leer_archivo('1V_ventas')
     venta2 = leer_archivo('2V_ventas')
     venta3 = leer_archivo('3V_ventas')
@@ -142,13 +133,25 @@ def actualiza_vendedores (lista):
     reporte2 = leer_archivo('2V_reporte')
     reporte3 = leer_archivo('3V_reporte')
     articulo = leer_archivo('articulo_reporte')
+
     venta1.append(lista)
     venta2.append(lista)
     venta3.append(lista)
-    reporte1.append(lista)
-    reporte2.append(lista)
-    reporte3.append(lista)
-    articulo.append(lista)
+    
+    reporte.append(lista[1])
+    reporte.append('0')
+    reporte.append('0')
+
+    reporte_articulo.append(lista[1])
+    reporte_articulo.append('0')
+    reporte_articulo.append(lista[4])
+    reporte_articulo.append('0')
+
+    reporte1.append(reporte)
+    reporte2.append(reporte)
+    reporte3.append(reporte)
+    articulo.append(reporte_articulo)
+
     guarda_matriz(venta1,'1V_ventas') 
     guarda_matriz(venta2,'2V_ventas')  
     guarda_matriz(venta3,'3V_ventas')   
@@ -178,6 +181,7 @@ def consultar_datos_inventario():
     
 def reportes_ventas_vendedor():
     cant = int(input('Ingrese la cantidad de búsquedas que desea hacer: '))
+    #Mientras la cantidad de búsquedas sea menor o igual a cero, se imprimirá un mensaje de error
     while cant <= 0:
         print('Error: Número no válido. Por favor vuelva a ingresar')
         cant = int(input())
@@ -191,7 +195,7 @@ def reportes_ventas_vendedor():
         #Ciclo hata la longitud de empleados para hacer comparaciones
         for j in range(0,len(empleados)):     
             #Si el dato ingresado se encuentra en la lista actual columna 0, se encontró por ID. En la columna 1 encontró por nombre
-            if nombre in empleados[j][0] or nombre in empleados[j][1]:
+            if nombre == empleados[j][0] or nombre == empleados[j][1]:
                 #En cualquier caso, a archivo se le asignará el ID de la lista que tuvo coincidencia (debido al nombre de los archivos)
                 archivo = str(empleados[j][0])
                 #Se lee e imprime el archivo de reporte correspondiente a ese ID
@@ -213,9 +217,10 @@ def reportes_ventas_artículo():
         reporte = []   
         nombre = input('Ingrese el nombre o ID del artículo que desea ver: ')
         print('\n')
+        #Se obtiene el archivo de inventario para seleccionar lo que se mostrará
         archivo = leer_archivo('inventario')
         for j in range(0,len(archivo)):     
-            if nombre in archivo[j][0] or nombre in archivo[j][1]:
+            if nombre == archivo[j][0] or nombre == archivo[j][1]:
                 reporte = leer_archivo('articulo_reporte')       
                 print('   Artículo            Cantidad        Precio           Total\n')
                 lista = (reporte[j])
@@ -243,7 +248,7 @@ def consultar_datos_ventas():
         inventario = leer_archivo('inventario')
         empleados = leer_archivo('lista_vendedores')
         for j in range(0,len(empleados)):     
-            if nombre in empleados[j][0] or nombre in empleados[j][1]:
+            if nombre == empleados[j][0] or nombre == empleados[j][1]:
                 archivo = str(empleados[j][0])
                 reporte = leer_archivo(f'{archivo}_reporte')  
                 for lista in range (len(reporte)):
@@ -256,7 +261,7 @@ def consultar_datos_ventas():
                 print('\n')
                 break
         for j in range(0,len(inventario)):   
-            if  nombre in inventario[j][1]:
+            if  nombre == inventario[j][1]:
                 reporte = leer_archivo('articulo_reporte')     
                 total_art = int(reporte[j][1])
                 total_vent =  int(reporte[j][3])                  
