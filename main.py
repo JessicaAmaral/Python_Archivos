@@ -85,17 +85,18 @@ def registrar_llegada_articulos_almacen():
                             if id_producto in inventario[z][0]:
                                 inventario[z][3]=str((int(inventario[z][3])+int(cant_prod)))
                                 guarda_matriz(inventario,'inventario') 
-                                print('¡Su registro en el almacen ha sido exitoso!')
+                                print('¡Su registro en el inventario ha sido exitoso!')
                             else:
                                 print('El articulo no existe, o el id es incorrecto')
                 else:
                     print('Error:La cantidad debe ser mayor a cero')
             elif opci == 'N' or 'n':
                 nuevo_art=[]
+                art_vendedor=[]
                 cant_art=int(input('Cantidad de articulos que desea ingresar: \n'))
                 if cant_art>0:               
                     for i in range(cant_art):
-                        
+
                         entra = 1
                         while entra != 0:
                             id_n=input('Ingrese el ID del articulo nuevo:\n')     
@@ -108,15 +109,21 @@ def registrar_llegada_articulos_almacen():
                                     entra = 0
 
                         nuevo_art.append(id_n)
+                        art_vendedor.append(id_n)
                         nombre=input('Ingrese el NOMBRE del articulo nuevo: \n')
                         nuevo_art.append(nombre)
+                        art_vendedor.append(nombre)
                         modelo=input('Ingrese el MODELO del articulo nuevo: \n')
                         nuevo_art.append(modelo)
+                        art_vendedor.append(modelo)
                         cant=input('Ingrese la CANTIDAD del articulo nuevo: \n')
                         nuevo_art.append(cant)
+                        art_vendedor.append('0')
                         precio_u=input('Ingrese el PRECIO UNITARIO del articulo nuevo: \n')
-                    nuevo_art.append(precio_u)     
+                    nuevo_art.append(precio_u)
+                    art_vendedor.append(precio_u)     
                     inventario.append(nuevo_art)
+                    actualiza_vendedores(art_vendedor)
                     guarda_matriz(inventario,'inventario') 
                     print('¡Su registro en el inventario ha sido exitoso!')                       
                 else:
@@ -127,7 +134,28 @@ def registrar_llegada_articulos_almacen():
     else:
         print('El id de recepcion es incorrecto.')
     
-    
+def actualiza_vendedores (lista):
+    venta1 = leer_archivo('1V_ventas')
+    venta2 = leer_archivo('2V_ventas')
+    venta3 = leer_archivo('3V_ventas')
+    reporte1 = leer_archivo('1V_reporte')
+    reporte2 = leer_archivo('2V_reporte')
+    reporte3 = leer_archivo('3V_reporte')
+    articulo = leer_archivo('articulo_reporte')
+    venta1.append(lista)
+    venta2.append(lista)
+    venta3.append(lista)
+    reporte1.append(lista)
+    reporte2.append(lista)
+    reporte3.append(lista)
+    articulo.append(lista)
+    guarda_matriz(venta1,'1V_ventas') 
+    guarda_matriz(venta2,'2V_ventas')  
+    guarda_matriz(venta3,'3V_ventas')   
+    guarda_matriz(reporte1,'1V_reporte')  
+    guarda_matriz(reporte2,'2V_reporte')  
+    guarda_matriz(reporte3,'3V_reporte')  
+    guarda_matriz(articulo,'articulo_reporte')
     
 def consultar_datos_inventario():
     inventario=leer_archivo('inventario')
