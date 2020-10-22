@@ -48,13 +48,19 @@ def registrar_ventas(cant):
             cant_prod=input(f'Ingrese la cantidad vendida del producto {i+1} --->')
             for z in range(0,len(ventas)):
                 if id_producto in ventas[z][0]:
-                    suma = int(ventas[z][3])+int(cant_prod)
-                    ventas[z][3] = str(suma)
-                    inventario[z][3]=str((int(inventario[z][3])-int(cant_prod)))
-                    guarda_matriz(ventas,f'{id_vendedor}_ventas')
-                    guarda_matriz(inventario,'inventario') 
-                    print('¡Su registro de ventas ha sido exitoso!')
-                    break
+                    
+                    if int(inventario[z][3]) != 0:
+                        suma = int(ventas[z][3])+int(cant_prod)
+                        ventas[z][3] = str(suma)
+                        inventario[z][3]=str((int(inventario[z][3])-int(cant_prod)))
+                        guarda_matriz(ventas,f'{id_vendedor}_ventas')
+                        guarda_matriz(inventario,'inventario') 
+                        print('¡Su registro de ventas ha sido exitoso!')
+                        break
+                    else:
+                        print('No hay artículos suficientes para hacer esta venta')
+                        suma = 1
+                        break
             if suma == 0:
                 print('El id del producto no existe.')   
         reporte_ventas(ventas, f'{id_vendedor}')  
