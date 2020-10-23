@@ -206,7 +206,9 @@ def consultar_datos_inventario():
     else:
         #Manejo de error si la letra es incorrecta de las opciones ofrecidas por el programa.
         print('Error: La letra que ingresaste es incorrecta')
-    
+
+
+ #Función que devuelve el reporte de ventas del vendedor deseado. No recibe parámetros.   
 def reportes_ventas_vendedor():
     cant = int(input('Ingrese la cantidad de búsquedas que desea hacer: '))
     while cant <= 0:
@@ -233,7 +235,8 @@ def reportes_ventas_vendedor():
         if len(reporte) <= 0:
             print('Error: No se encontró al vendedor\n')                
     input('Enter para continuar')
-    
+
+#Función que devuelve el reporte de ventas del artículo deseado. No recibe parámetros.   
 def reportes_ventas_artículo():        
     cant = int(input('Ingrese la cantidad de búsquedas que desea hacer: '))
     while cant <= 0:
@@ -260,6 +263,7 @@ def reportes_ventas_artículo():
     input('Enter para continuar')
 
 
+#Función que devuelve una consulta específica, buscando ventas por nombre de vendedor o artículo. No recibe parámetros.
 def consultar_datos_ventas():
     cant = int(input('Ingrese la cantidad de búsquedas que desea hacer: '))
     while cant <= 0:
@@ -276,21 +280,30 @@ def consultar_datos_ventas():
         inventario = leer_archivo('inventario')
         empleados = leer_archivo('lista_vendedores')
         for j in range(0,len(empleados)):     
-            if nombre in empleados[j][0] or nombre in empleados[j][1]:
+            #Si el elemento 0 (ID) o 1 (nombre) de la lista actual coincide con el nombre que ingresó el usuario
+            if nombre == empleados[j][0] or nombre == empleados[j][1]:
+                #Se guarda el ID del empleado que tuvo la coincidencia para utilizarlo en la función leer, pues se requiere enviar el nombre del archivo a la función
                 archivo = str(empleados[j][0])
                 reporte = leer_archivo(f'{archivo}_reporte')  
                 for lista in range (len(reporte)):
+                    #En estas variables se guarda la suma del elemento en la lista que correspone a los artículos vendidos (1) y al total de venta (2)
                     total_art += int(reporte[lista][1])
                     total_vent +=  int(reporte[lista][2])
+                #Se agregan estas dos variables a una lista busqueda
                 busqueda.append(str(total_art))    
                 busqueda.append(str(total_vent))
+                #Se envía dicha lista a una función para que se imprima con un espaciado con el que se muestre de manera ordenada al usuario
                 print('   Art Vendidos      Total\n')
                 imprimir_lista2(busqueda)
                 print('\n')
+                #En caso de terminar este ciclo, se habrá concluido la búsqueda
                 break
         for j in range(0,len(inventario)):   
-            if  nombre in inventario[j][1]:
-                reporte = leer_archivo('articulo_reporte')     
+            #Si el nombre ingresado coincide con el elemento 1 (nombre) de la lista actual en el archivo de inventario
+            if  nombre == inventario[j][1]:
+                #Quiere decir que se hizo una búsqueda por artículo, por lo tanto, se guarda en una variable el reporte de ventas por artículo
+                reporte = leer_archivo('articulo_reporte') 
+                #Se guardan los elementos correspondientes al total de artículos vendidos y al total de las ventas de la lista en la que se encontró la coincidencia  
                 total_art = int(reporte[j][1])
                 total_vent =  int(reporte[j][3])                  
                 busqueda.append(str(total_art))    
@@ -303,19 +316,21 @@ def consultar_datos_ventas():
             print('Error: No se encontró el artículo\n')                
     input('Enter para continuar')
 
-
+#Función que actualiza el archivo de ventas del vendedor correspondiente. Recibe una matriz con las ventas y el nombre del archivo del vendedor.
 def reporte_ventas(archivo, nombre):
     matriz = []
     for k in range(len(archivo)):
         matriz.append([])            
         matriz[k].append(archivo[k][1])
         matriz[k].append(archivo[k][3])
+        #Se multiplica el elemento de cantidad de artículos por el precio unitario y se almacena
         total = int(archivo[k][3])*int(archivo[k][4])
         matriz[k].append(str(total))
     guarda_matriz(matriz,f'{nombre}_reporte')
     reporte = leer_archivo(f'{nombre}_reporte')
     return reporte
 
+#Función que actualiza el reporte de artículos cuando se hace una venta. No recibe parámetros.
 def reporte_articulos():
     matriz = []
     vendedor1 = leer_archivo('1V_reporte')
@@ -325,15 +340,18 @@ def reporte_articulos():
     for k in range(len(inventario)):
         matriz.append([])            
         matriz[k].append(inventario[k][1])
+        #Agrega la suma de los artículos vendidos (por todos los vendedores) en la lista que se encuentra el ciclo.
         total_art = int(vendedor1[k][1]) + int(vendedor2[k][1]) + int(vendedor3[k][1])
         matriz[k].append(str(total_art))
         matriz[k].append(inventario[k][4])
+        #Se obtiene el total de las ventas multiplicando el elemento que corresponde al precio por el total de artículos.
         total_vent = total_art * int(inventario[k][4])
         matriz[k].append(str(total_vent))
     guarda_matriz(matriz,'articulo_reporte')
     reporte = leer_archivo('articulo_reporte')
     return reporte
 
+#Función que actualiza todos los archivos cuando se agrega un nuevo artículo. Recibe la lista del artículo que se ingresó.
 def actualiza_vendedores (lista):
     reporte = []
     reporte_articulo = []
@@ -372,8 +390,6 @@ def actualiza_vendedores (lista):
     guarda_matriz(reporte3,'3V_reporte')  
     guarda_matriz(articulo,'articulo_reporte')
 
-
-    
 #Programa principal
 print("***********************************************************************")
 print('AUTOX')
