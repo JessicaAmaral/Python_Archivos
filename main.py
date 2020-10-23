@@ -245,14 +245,16 @@ def reportes_ventas_artículo():
         nombre = input('Ingrese el nombre o ID del artículo que desea ver: ')
         print('\n')
         archivo = leer_archivo('inventario')
-        for j in range(0,len(archivo)):     
-            if nombre in archivo[j][0] or nombre in archivo[j][1]:
+        for j in range(0,len(archivo)):    
+            #Si existe una coincidencia con el nombre ingresado y la lista en su elemento 0 (ID) o 1 (nombre) imprime la lista que corresponde
+            if nombre == archivo[j][0] or nombre == archivo[j][1]:
                 reporte = leer_archivo('articulo_reporte')       
                 print('   Artículo            Cantidad        Precio           Total\n')
                 lista = (reporte[j])
                 imprimir_lista2(lista)
                 print('\n')
                 break
+        #Si la longitud de la variable reporte es menor a 1, quiere decir que no se leyó el archivo. Por lo tanto, no se encontró el artículo.
         if len(reporte) < 1:
             print('Error: No se encontró el artículo\n')                
     input('Enter para continuar')
@@ -331,6 +333,44 @@ def reporte_articulos():
     guarda_matriz(matriz,'articulo_reporte')
     reporte = leer_archivo('articulo_reporte')
     return reporte
+
+def actualiza_vendedores (lista):
+    reporte = []
+    reporte_articulo = []
+
+    venta1 = leer_archivo('1V_ventas')
+    venta2 = leer_archivo('2V_ventas')
+    venta3 = leer_archivo('3V_ventas')
+    reporte1 = leer_archivo('1V_reporte')
+    reporte2 = leer_archivo('2V_reporte')
+    reporte3 = leer_archivo('3V_reporte')
+    articulo = leer_archivo('articulo_reporte')
+
+    venta1.append(lista)
+    venta2.append(lista)
+    venta3.append(lista)
+    
+    reporte.append(lista[1])
+    reporte.append('0')
+    reporte.append('0')
+
+    reporte_articulo.append(lista[1])
+    reporte_articulo.append('0')
+    reporte_articulo.append(lista[4])
+    reporte_articulo.append('0')
+
+    reporte1.append(reporte)
+    reporte2.append(reporte)
+    reporte3.append(reporte)
+    articulo.append(reporte_articulo)
+
+    guarda_matriz(venta1,'1V_ventas') 
+    guarda_matriz(venta2,'2V_ventas')  
+    guarda_matriz(venta3,'3V_ventas')   
+    guarda_matriz(reporte1,'1V_reporte')  
+    guarda_matriz(reporte2,'2V_reporte')  
+    guarda_matriz(reporte3,'3V_reporte')  
+    guarda_matriz(articulo,'articulo_reporte')
 
 
     
