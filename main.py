@@ -1,3 +1,6 @@
+#José Avir Gariel Guerrero-A01640473
+#Jessica Gisela Amaral Franco- A01640373
+
 #Programa de inventarios
 import os
 #Funciones
@@ -111,9 +114,9 @@ def registrar_llegada_articulos_almacen():
                             inventario[z][3]=str((int(inventario[z][3])+int(cant_prod)))
                             guarda_matriz(inventario,'inventario') 
                             print('¡Su registro en el almacen ha sido exitoso!')
-                            break;
+                            break
                         else:
-                            break;
+                            break
                         #Si el id no exise manda este mensaje
                     if id_producto not in inventario[z][0]:
                         print('El producto no existe')
@@ -180,7 +183,7 @@ def consultar_datos_inventario():
         for z in range(len(inventario)):
             if articulo in inventario[z][0] or articulo in inventario[z][1]:
                 salir=1
-                break;
+                break
             else:
                 salir=0
                     
@@ -224,7 +227,7 @@ def reportes_ventas_vendedor():
         #Ciclo hata la longitud de empleados para hacer comparaciones
         for j in range(0,len(empleados)):     
             #Si el dato ingresado se encuentra en la lista actual columna 0, se encontró por ID. En la columna 1 encontró por nombre
-            if nombre in empleados[j][0] or nombre in empleados[j][1]:
+            if nombre == empleados[j][0] or nombre == empleados[j][1]:
                 #En cualquier caso, a archivo se le asignará el ID de la lista que tuvo coincidencia (debido al nombre de los archivos)
                 archivo = str(empleados[j][0])
                 #Se lee e imprime el archivo de reporte correspondiente a ese ID
